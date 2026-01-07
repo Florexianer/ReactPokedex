@@ -9,9 +9,9 @@ import { debounce } from 'lodash';
 function PokeList({ filterString }) {
     const [pokemons, setPokemons] = useState([]);
 
-    const readPokemons = () => {
+    const readPokemons = (filterStringParam) => {
         const fetchPokemon = async () => {
-            const data = await axios.get("https://pokemon-service-ucql.onrender.com/api/v1/pokemon/search?name=" + filterString);
+            const data = await axios.get("https://pokemon-service-ucql.onrender.com/api/v1/pokemon/search?name=" + filterStringParam);
             setPokemons(data.data);
         }
 
@@ -22,8 +22,7 @@ function PokeList({ filterString }) {
     const debounceRead = useCallback(debounce(readPokemons, 300), []);
 
     useEffect(() => {
-        debounceRead();
-        console.log(filterString)
+        debounceRead(filterString);
     }, [filterString])
 
 
